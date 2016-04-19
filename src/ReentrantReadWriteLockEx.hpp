@@ -1,39 +1,31 @@
 #include <iostream>
 #include <string>
-#include <decaf/util/concurrent/locks/ReentrantReadWriteLock.h>
-#include <decaf/lang/Runnable.h>
-#include <decaf/lang/Thread.h>
-#include <decaf/lang/exceptions/InterruptedException.h>
-
-using namespace decaf::util::concurrent::locks;
-using namespace decaf::lang::exceptions;
-using namespace decaf::lang;
+#include "ActiveMq.hpp"
 using namespace std;
 
 class ReentrantReadWriteLockExample {
 
-static ReentrantReadWriteLock lock;
+ static ReentrantReadWriteLock* lock;
 
 static  std::string message;
 
 
 public:
     ReentrantReadWriteLockExample()  {
-        ReentrantReadWriteLock* lock =new ReentrantReadWriteLock();
+       lock =new ReentrantReadWriteLock(true);
     }
 
-private:
     class Read :public Runnable {
 
     public:
         virtual void run() {
             for(int i = 0; i<= 10; i ++) {
-                if(lock.isWriteLocked()) {
+                if(lock->isWriteLocked()) {
                     std::cout<<"I'll take the lock from Write\n";
                 }
-                lock.readLock().lock();
+                lock->readLock().lock();
 //                std::cout<<"ReadThread " + Thread.currentThread().getId() + " ---> Message is " + message );
-                lock.readLock().unlock();
+                lock->readLock().unlock();
             }
         }
     };
@@ -43,10 +35,10 @@ private:
         virtual void run() {
             for(int i = 0; i<= 10; i ++) {
                 try {
-                    lock.writeLock().lock();
+                    lock->writeLock().lock();
                     message = message+"a";
                 } catch(...){
-                        lock.writeLock().unlock();
+                        lock->writeLock().unlock();
                 }
             }
         }
@@ -57,10 +49,10 @@ private:
         virtual void run() {
             for(int i = 0; i<= 10; i ++) {
                 try {
-                    lock.writeLock().lock();
+                    lock->writeLock().lock();
                     message = message +"b";
                 } catch(...) {
-                        lock.writeLock().unlock();
+                        lock->writeLock().unlock();
                 }
             }
         }
@@ -82,7 +74,7 @@ public :
             t3->join();
         }
         catch (InterruptedException& ex){
-
+            ex.printStackTrace(std::cout);
         }
     }
 };
