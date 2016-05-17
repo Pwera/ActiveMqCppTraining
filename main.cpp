@@ -19,11 +19,8 @@ int main() {
     thex1.testPriority();
     thex1.testIsAlive();
     thex1.testState();
-<<<<<<< HEAD
+    cout<<"1\n";
     //############################
-=======
-    //#########################
->>>>>>> 7fcfecf... ...
 
     activemq::library::ActiveMQCPP::shutdownLibrary();
     return 0;

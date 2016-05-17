@@ -4,6 +4,8 @@
 int main(){
     ActiveMqInit ActiveMqInit;
 
-    BucketBallGame s;
-    s.doTransform();
+    BucketBallGame::doTransform();
+    Thread::sleep(static_cast<int>(Math::random() * 3000));
+
+
 }
