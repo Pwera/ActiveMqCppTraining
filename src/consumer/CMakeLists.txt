@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.5)
+project(Consumer)
+set(SOURCE_FILES main.cpp consumer.hpp)
+add_executable(Consumer ${SOURCE_FILES})
+target_link_libraries(Consumer -lactivemq-cpp)
