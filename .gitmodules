@@ -1,0 +1,3 @@
+[submodule "external/activemq-cpp"]
+	path = external/activemq-cpp
+	url = https://github.com/apache/activemq-cpp

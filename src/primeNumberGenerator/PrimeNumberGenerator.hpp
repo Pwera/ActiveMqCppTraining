@@ -25,10 +25,10 @@ public:
 
 class PrimeNumberGenerator {
     std::unique_ptr<Runnable> r;
-    Thread *primeNumberGenerator;
+    std::unique_ptr<Thread> primeNumberGenerator;
 public:
     PrimeNumberGenerator() : r{new WorkerThread()} {
-        primeNumberGenerator = new Thread{r.get()};
+        primeNumberGenerator.reset(new Thread{r.get()});
 
         primeNumberGenerator->start();
         try {

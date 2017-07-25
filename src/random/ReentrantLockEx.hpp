@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include <thread>
-#include "ActiveMq.hpp"
+#include "../ActiveMq.hpp"
 
 using namespace std;
 class Account {

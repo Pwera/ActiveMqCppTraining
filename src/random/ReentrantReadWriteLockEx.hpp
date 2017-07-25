@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "ActiveMq.hpp"
+#include "../ActiveMq.hpp"
 using namespace std;
 
 class ReentrantReadWriteLockExample {

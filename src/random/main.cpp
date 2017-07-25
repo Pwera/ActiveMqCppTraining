@@ -1,7 +1,7 @@
 #include <iostream>
-#include "src/ReentrantReadWriteLockEx.hpp"
-#include "src/ReentrantLockEx.hpp"
-#include "src/ThreadExample.hpp"
+#include "ReentrantReadWriteLockEx.hpp"
+#include "ReentrantLockEx.hpp"
+#include "ThreadExample.hpp"
 
 using namespace std;
 using namespace activemq;

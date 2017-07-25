@@ -4,7 +4,6 @@
 
 
 #include <activemq/library/ActiveMQCPP.h>
-//#include <activemq/transport/mock/>
 #include <activemq/core/ActiveMQConnectionFactory.h>
 #include <activemq/core/ActiveMQConnection.h>
 #include <activemq/transport/DefaultTransportListener.h>
@@ -53,7 +52,6 @@
 
 using namespace decaf::util::concurrent::locks;
 using namespace decaf::util::concurrent;
-using namespace decaf::util::comparators;
 using namespace decaf::util;
 using namespace decaf::lang::exceptions;
 using namespace decaf::lang;

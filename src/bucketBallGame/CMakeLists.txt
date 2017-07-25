@@ -1,11 +1,8 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.3)
 project(BucketBallGame)
 
-link_directories(/usr/local/lib64)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -std=c++1y -fpermissive")
-set(ACTIVEMQ_CXX_FLAGS "-DLINUX -D_REENTRANT -D_GNU_SOURCE -pthread -I/usr/local/include/activemq-cpp-3.10.0 -I/usr/include/apr-1 -L/usr/local/lib64  -lapr-1 -lpthread -ldl -luuid ")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ACTIVEMQ_CXX_FLAGS}")
 set(SOURCE_FILES main.cpp BucketBallGame.hpp)
 
 add_executable(BucketBallGame ${SOURCE_FILES})
-target_link_libraries(BucketBallGame -lactivemq-cpp)
+target_link_libraries(BucketBallGame ActiveMqCpp)
+target_compile_options(BucketBallGame PRIVATE -std=c++14 -Wno-deprecated-declarations) #TODO: Wno-deprecated-declarations fot auto-ptr

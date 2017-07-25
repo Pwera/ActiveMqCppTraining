@@ -1,7 +1,7 @@
 #ifndef ACTIVEMQTRAINING_THREADEXAMPLE_HPP
 #define ACTIVEMQTRAINING_THREADEXAMPLE_HPP
 
-#include "ActiveMq.hpp"
+#include "../ActiveMq.hpp"
 #include <cassert>
 #include <memory>
 
