@@ -1,1 +1,0 @@
-/usr/bin/g++   -g   CMakeFiles/Consumer.dir/main.cpp.o  -o Consumer -Wl,-rpath,/home/user/git/ActiveMqCppTraining/cmake-build-debug/external/activemq-cpp/activemq-cpp -rdynamic ../../external/activemq-cpp/activemq-cpp/libActiveMqCpp.so -pthread -ldl -lapr-1 
