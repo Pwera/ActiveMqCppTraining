@@ -1,0 +1,6 @@
+/home/user/Downloads/clion-2017.1/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DAPR_LIBRARY_ROOT=/usr/include/apr-1 -G "CodeBlocks - Unix Makefiles" /home/user/git/ActiveMqCppTraining
+INFO :D CMAKE_CURRENT_LIST_DIR=/home/user/git/ActiveMqCppTraining/external/activemq-cpp/activemq-cpp
+INFO MAIN_DIR=/home/user/git/ActiveMqCppTraining/external/activemq-cpp/activemq-cpp/src/main
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/user/git/ActiveMqCppTraining/cmake-build-debug

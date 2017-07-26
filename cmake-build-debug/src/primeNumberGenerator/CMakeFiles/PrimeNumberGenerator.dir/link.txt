@@ -1,0 +1,1 @@
+/usr/bin/g++   -g   CMakeFiles/PrimeNumberGenerator.dir/main.cpp.o  -o PrimeNumberGenerator -Wl,-rpath,/home/user/git/ActiveMqCppTraining/cmake-build-debug/external/activemq-cpp/activemq-cpp -rdynamic ../../external/activemq-cpp/activemq-cpp/libActiveMqCpp.so -pthread -ldl -lapr-1 

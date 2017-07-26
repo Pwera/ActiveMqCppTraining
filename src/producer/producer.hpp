@@ -1,20 +1,22 @@
 #pragma once
 #include "../ActiveMq.hpp"
 #include <string>
+#include <experimental/string_view>
 using namespace std;
+using namespace std::experimental;
 
 class Producer : public Runnable {
 private:
 
-    Connection* connection;
-    Session* session;
-    Destination* destination;
-    MessageProducer* producer;
+    unique_ptr<Connection> connection;
+    unique_ptr<Session> session;
+    unique_ptr<Destination> destination;
+    unique_ptr<MessageProducer> producer;
     bool useTopic;
     bool clientAck;
     unsigned int numMessages;
-    std::string brokerURI;
-    std::string destURI;
+    string_view brokerURI;
+    string_view destURI;
 
 private:
 
@@ -23,8 +25,8 @@ private:
 
 public:
 
-    Producer( const std::string& brokerURI, unsigned int numMessages,
-                    const std::string& destURI, bool useTopic = false, bool clientAck = false ) :
+    Producer( const string_view& brokerURI, unsigned int numMessages,
+                    const string_view& destURI, bool useTopic = false, bool clientAck = false ) :
             connection(nullptr),
             session(nullptr),
             destination(nullptr),
@@ -46,14 +48,13 @@ public:
 
     virtual void run() {
         try {
-
             // Create a ConnectionFactory
             unique_ptr<ActiveMQConnectionFactory> connectionFactory(
-                    new ActiveMQConnectionFactory( brokerURI ) );
+                    new ActiveMQConnectionFactory( brokerURI.to_string() ) );
 
             // Create a Connection
             try{
-                connection = connectionFactory->createConnection();
+                connection.reset(connectionFactory->createConnection());
                 connection->start();
             } catch( CMSException& e ) {
                 e.printStackTrace();
@@ -61,22 +62,17 @@ public:
             }
 
             // Create a Session
-            if( clientAck ) {
-                session = connection->createSession( Session::CLIENT_ACKNOWLEDGE );
-            } else {
-                session = connection->createSession( Session::AUTO_ACKNOWLEDGE );
-            }
-//            connection->getMetaData()->getCMSMajorVersion();
+                session.reset(connection->createSession(clientAck ? Session::CLIENT_ACKNOWLEDGE:  Session::AUTO_ACKNOWLEDGE));
 
             // Create the destination (Topic or Queue)
             if( useTopic ) {
-                destination = session->createTopic( destURI );
+                destination.reset(session->createTopic( destURI.to_string()));
             } else {
-                destination = session->createQueue( destURI );
+                destination.reset(session->createQueue( destURI.to_string() ));
             }
 
             // Create a MessageProducer from the Session to the Topic or Queue
-            producer = session->createProducer( destination );
+            producer.reset(session->createProducer( destination.get() ));
             producer->setDeliveryMode( DeliveryMode::NON_PERSISTENT );
 
             // Create the Thread Id String
@@ -86,15 +82,15 @@ public:
             string text = (string)"Hello world! from thread " + threadIdStr;
 
             for( unsigned int ix=0; ix<numMessages; ++ix ){
-                TextMessage* message = session->createTextMessage( text );
-
+                std::unique_ptr<TextMessage> message{session->createTextMessage( text )};
                 message->setIntProperty( "Integer", ix );
+                string value =  "value";
+                value+=ix;
+                message->setStringProperty("key", value);
 
-                // Tell the producer to send the message
                 printf( "Sent message #%d from thread %s\n", ix+1, threadIdStr.c_str() );
-                producer->send( message );
-
-                delete message;
+                producer->send(message.get());
+                Thread::sleep(1000);
             }
 
         }catch ( CMSException& e ) {
@@ -105,16 +101,7 @@ public:
 private:
 
     void cleanup(){
-
-        // Destroy resources.
-        try{
-            if( destination != nullptr ) delete destination;
-        }catch ( CMSException& e ) { e.printStackTrace(); }
         destination = nullptr;
-
-        try{
-            if( producer != nullptr ) delete producer;
-        }catch ( CMSException& e ) { e.printStackTrace(); }
         producer = nullptr;
 
         // Close open resources.
@@ -123,14 +110,7 @@ private:
             if( connection != nullptr ) connection->close();
         }catch ( CMSException& e ) { e.printStackTrace(); }
 
-        try{
-            if( session != nullptr ) delete session;
-        }catch ( CMSException& e ) { e.printStackTrace(); }
         session = nullptr;
-
-        try{
-            if( connection != nullptr ) delete connection;
-        }catch ( CMSException& e ) { e.printStackTrace(); }
         connection = nullptr;
     }
 };

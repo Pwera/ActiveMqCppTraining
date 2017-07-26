@@ -1,0 +1,1 @@
+/usr/bin/g++   -g   CMakeFiles/BucketBallGame.dir/main.cpp.o  -o BucketBallGame -Wl,-rpath,/home/user/git/ActiveMqCppTraining/cmake-build-debug/external/activemq-cpp/activemq-cpp -rdynamic ../../external/activemq-cpp/activemq-cpp/libActiveMqCpp.so -pthread -ldl -lapr-1 
