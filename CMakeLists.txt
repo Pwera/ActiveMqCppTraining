@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.10)
 project(ActiveMqTraining C CXX)
 SET(CMAKE_CXX_STANDARD 11)
 
+list(APPEND CMAKE_MODULE_PATH "C:/lib2")
+include(MyUtils)
+
 option(BUILD_EXAMPLES "Build Example applications" TRUE)
 option(BUILD_TESTS "Build Test applications" FALSE)
 option(CMAKE_VERBOSE_MAKEFILE "Use verbose output" TRUE)
