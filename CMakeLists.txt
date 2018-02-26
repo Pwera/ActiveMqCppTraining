@@ -2,9 +2,6 @@ cmake_minimum_required(VERSION 3.10)
 project(ActiveMqTraining C CXX)
 SET(CMAKE_CXX_STANDARD 11)
 
-list(APPEND CMAKE_MODULE_PATH "C:/lib2")
-include(MyUtils)
-
 option(BUILD_EXAMPLES "Build Example applications" TRUE)
 option(BUILD_TESTS "Build Test applications" FALSE)
 option(CMAKE_VERBOSE_MAKEFILE "Use verbose output" TRUE)
@@ -12,7 +9,7 @@ option(CMAKE_VERBOSE_MAKEFILE "Use verbose output" TRUE)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 set(COTERIZE_BUILD FALSE)
-if(DEFINED COTERIZE_BUILD)
+if(COTERIZE_BUILD)
     set(COTIRE_DEBUG TRUE)
     set(COTIRE_VERBOSE TRUE)
     set(COTIRE_MINIMUM_NUMBER_OF_TARGET_SOURCES 2)
